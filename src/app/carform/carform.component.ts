@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CarpictureService } from '../services/carpicture.service';
+import {KentekenCheck} from 'rdw-kenteken-check';
 
 @Component({
   selector: 'app-carform',
@@ -38,7 +39,7 @@ export class CarformComponent {
   ];
 
   constructor(
-    private readonly carPicture: CarpictureService
+    private readonly carPicture: CarpictureService,
   ) { }
 
   carForm = new FormGroup({
@@ -73,7 +74,15 @@ export class CarformComponent {
           vehiclePlate: vehiclePlateFormated
         })
 
-        this.vehiclePlate = vehiclePlateFormated
+        this.vehiclePlate = vehiclePlateFormated;
+    }
+    this.checkVehiclePlate();
+  }
+
+  checkVehiclePlate() {
+    if(this.carForm.controls.vehiclePlate.value) {
+      const checkPlate = new KentekenCheck(this.carForm.controls.vehiclePlate.value?.toString());
+      // !checkPlate.valid ? this.vehiclePlateValid = false : '';s
     }
   }
 
@@ -81,6 +90,5 @@ export class CarformComponent {
     this.carForm.patchValue({
       vehiclePlate: this.vehiclePlate
     })
-    console.log(this.carForm.value);
   }
 }
