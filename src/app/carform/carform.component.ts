@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CarpictureService } from '../services/carpicture.service';
 
 @Component({
@@ -9,7 +9,9 @@ import { CarpictureService } from '../services/carpicture.service';
 })
 
 export class CarformComponent {
+  vehiclePlate?: string = '';
   subTypes: any;
+  vehiclePlateValid: boolean = true;
 
   carSubTypes = [
     'Hatchback',
@@ -40,8 +42,9 @@ export class CarformComponent {
   ) { }
 
   carForm = new FormGroup({
-    vehicleKind: new FormControl(''),
-    vehicleType: new FormControl(''),
+    vehicleKind: new FormControl('', Validators.required),
+    vehicleType: new FormControl('', Validators.required),
+    vehiclePlate: new FormControl('', Validators.required)
   });
 
   populateSubtype() {
@@ -61,8 +64,23 @@ export class CarformComponent {
    };
   }
 
-  onSubmit() {
-    console.log(this.carForm.value);
+  formatVehiclePlate() {
+    const vehiclePlate = (this.carForm.controls.vehiclePlate.value)?.toString();
+    if(!(vehiclePlate)?.includes('-')) {
+      const vehiclePlateFormated = (vehiclePlate)?.match(/(..?)/g)?.join('-').toUpperCase();
 
+      this.carForm.patchValue({
+          vehiclePlate: vehiclePlateFormated
+        })
+
+        this.vehiclePlate = vehiclePlateFormated
+    }
+  }
+
+  onSubmit() {
+    this.carForm.patchValue({
+      vehiclePlate: this.vehiclePlate
+    })
+    console.log(this.carForm.value);
   }
 }
