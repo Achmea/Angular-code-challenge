@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CarpictureService } from '../services/carpicture.service';
 
 @Component({
   selector: 'app-carform',
@@ -34,7 +35,9 @@ export class CarformComponent {
     'geen subtype aanwezig'
   ];
 
-  constructor() { }
+  constructor(
+    private readonly carPicture: CarpictureService
+  ) { }
 
   carForm = new FormGroup({
     vehicleKind: new FormControl(''),
@@ -42,10 +45,18 @@ export class CarformComponent {
   });
 
   populateSubtype() {
-   if(this.carForm.controls.vehicleKind.value === 'Auto') this.subTypes = this.carSubTypes;
-   if(this.carForm.controls.vehicleKind.value === 'Motor') this.subTypes = this.motorSubTypes;
+   if(this.carForm.controls.vehicleKind.value === 'Auto') {
+    this.subTypes = this.carSubTypes
+    this.carPicture.changePicture('auto');
+  };
+
+   if(this.carForm.controls.vehicleKind.value === 'Motor') {
+    this.subTypes = this.motorSubTypes
+    this.carPicture.changePicture('motor');};
+
    if(this.carForm.controls.vehicleKind.value === 'Scooter') {
      this.subTypes = this.scooterSubTypes;
+     this.carPicture.changePicture('scooter');
     //  this.carForm.controls.vehicleType.disable();
    };
   }

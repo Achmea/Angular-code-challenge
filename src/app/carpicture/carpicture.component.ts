@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CarpictureService } from '../services/carpicture.service';
 
 @Component({
   selector: 'app-carpicture',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./carpicture.component.css']
 })
 export class CarpictureComponent implements OnInit {
+  vehicleType: string = '';
 
-  constructor() { }
+
+  constructor(
+    private readonly carPicture: CarpictureService
+  ) { }
 
   ngOnInit(): void {
+    this.carPicture.source.subscribe((type) => this.vehicleType = type);
   }
 
 }
