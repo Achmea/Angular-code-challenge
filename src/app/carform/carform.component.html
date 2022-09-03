@@ -4,7 +4,7 @@
   <!-- SELECT VOERTUIG TYPE-->
   <label class="block mt-4">
     <span class="text-gray-700">Van welk type voertuig wilt u voertuiginformatie opzoeken?</span>
-    <select formControlName="vehicleKind" class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" name="vehicle-type">
+    <select formControlName="vehicleKind" (ngModelChange)="populateSubtype()" class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
       <option>Auto</option>
       <option>Motor</option>
       <option>Scooter</option>
@@ -14,14 +14,9 @@
   <!-- SELECT VOERTUIG SUBTYPE-->
   <label class="block mt-4">
     <span class="text-gray-700">Welk type [auto/motor/brommer] hebt u?</span>
-    <select formControlName="vehicleType" class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" name="vehicle-subtype">
-      <option>Hatchback</option>
-      <option>Sedan</option>
-      <option>Station</option>
-      <option>Cabriolet</option>
-      <option>Coupé</option>
-      <option>MPV</option>
-      <option>Terreinauto</option>
+    <select formControlName="vehicleType" class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0">
+      <!-- <option disabled>Subtype</option> -->
+      <option *ngFor="let subType of subTypes" value="{{ subType }}">{{ subType }}</option>
     </select>
   </label>
 
