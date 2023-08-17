@@ -1,0 +1,12 @@
+<label class="block mt-4">
+  <span class="text-gray-700">Welk type [auto/motor/brommer] hebt u?</span>
+  <select class="block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
+          name="vehicle-subtype"
+          [(ngModel)]="selectedVehicleSubtype"
+          [disabled]="(selectedVehicleType$ | async) === 'scooter'"
+          [title]="(selectedVehicleType$ | async) === 'scooter' ? 'Keine Optionen verfügbar' : ''"
+          (ngModelChange)="onSelectedVehicleSubtypeChange($event)">
+    <option *ngFor="let subtype of (availableSubtypes$ | async)" [value]="subtype">{{ subtype }}</option>
+  </select>
+</label>
+
